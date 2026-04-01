@@ -1,0 +1,9 @@
+# WiFi credentials
+secrets.h
+
+# Build output
+build/
+
+# IDE files
+.vscode/
+*.code-workspace
