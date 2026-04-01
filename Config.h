@@ -1,5 +1,7 @@
 #pragma once
 
+#include "secrets.h"
+
 // ── Board ────────────────────────────────────────────────
 // MakerGO ESP32-C6 SuperMini
 //
@@ -22,8 +24,8 @@
 #define PIN_I2C_SCL         PIN_SCL
 
 // ── WiFi ─────────────────────────────────────────────────
-#define WIFI_SSID         "REMOVED_WIFI_SSID"
-#define WIFI_PASSWORD     "REMOVED_WIFI_PASSWORD"
+#define WIFI_SSID         SECRET_WIFI_SSID
+#define WIFI_PASSWORD     SECRET_WIFI_PASSWORD
 #define WIFI_RECONNECT_INTERVAL_MS  10000UL  // min ms between reconnect attempts
 
 // ── OTA ──────────────────────────────────────────────────
