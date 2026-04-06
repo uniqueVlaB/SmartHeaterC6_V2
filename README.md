@@ -27,11 +27,11 @@ SmartHeater V2 adds:
 | Body temp sensor | DS18B20 | GPIO 19 (same bus) |
 | Power meter | PZEM-004T v3.0 | TX→GPIO 0, RX→GPIO 1 |
 | Logic level converter | Bi-directional 5V↔3.3V | Between ESP32 UART and PZEM |
-
-> **Note:** The PZEM-004T operates at 5 V TTL logic levels. The ESP32-C6 is a 3.3 V device. A bi-directional logic level converter **must** be used on the UART lines (TX and RX) to avoid damaging the MCU.
 | Display | SH1107 128×64 OLED (I²C) | SDA→GPIO 15, SCL→GPIO 14 |
 | Status LED | WS2812B (on-board) | GPIO 8 |
 | Button | Momentary push-button | GPIO 2 (INPUT_PULLUP) |
+
+> **Note:** The PZEM-004T operates at 5 V TTL logic levels. The ESP32-C6 is a 3.3 V device. A bi-directional logic level converter **must** be used on the UART lines (TX and RX) to avoid damaging the MCU.
 
 ## Configuration
 
