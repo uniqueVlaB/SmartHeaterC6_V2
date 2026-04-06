@@ -62,7 +62,7 @@ Create a `secrets.h` file (git-ignored):
 
 Open `SmartHeaterC6_V2.ino` in Arduino IDE.
 
-**Board:** ESP32C6 Dev Module  
+**Board:** MakerGO ESP32-C6 SuperMini 
 **Flash Size:** 4 MB  
 **Partition Scheme:** Default 4MB with spiffs  
 
