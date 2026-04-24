@@ -17,6 +17,25 @@ SmartHeater V2 adds:
 - **Duty-cycle mode** — periodic relay cool-down for SSR thermal management  
 - **Energy statistics with cost tracking** persisted in NVS  
 
+## Mobile App (Heater Control)
+
+The project features a cross-platform companion mobile application built with Flutter (`flutter_control_app`). It provides an intuitive interface to control the heater, manage your heating schedules, and track energy usage and costs (with multi-language support for English and Ukrainian).
+
+Key app features include:
+- **Dashboard:** Real-time visibility into water temperature, relay status, selected mode, and active/upcoming schedules.
+- **Schedules:** Add, remove, edit, and toggle specific time windows with individualized target temperatures for heating (e.g. to leverage cheaper night-time energy tariffs).
+- **Statistics:** Explore energy usage and estimated costs natively across "Today", "This Month", "This Year", and "All Time" using dynamic charting and persistent session logs.
+- **Settings:** Configure firmware variables (hysteresis, body limit, maximum allowed target temp, duty cycle), plus system actions like restarts and factory resets directly from the mobile app without using HTTP requests.
+
+### App Screenshots
+
+<p align="center">
+  <img src="images/dashboard_screen.png" width="23%" alt="Dashboard screen" />
+  <img src="images/schedule_screen.png" width="23%" alt="Schedule screen" />
+  <img src="images/stats_page.png" width="23%" alt="Stats screen" />
+  <img src="images/settings_screen.png" width="23%" alt="Settings screen" />
+</p>
+
 ## Hardware
 
 | Component | Model | Connection |
