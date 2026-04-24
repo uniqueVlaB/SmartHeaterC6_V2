@@ -63,6 +63,7 @@ void WebApi::begin() {
 
     _server.onNotFound(                          [this]() { handleNotFound();       });
 
+
     loadPeriodicRestartNVS();
 
     _server.begin();
@@ -199,6 +200,9 @@ void WebApi::handleStatus() {
         temperatureRead(),
         getCpuLoadPercent());
 
+    _server.sendHeader("Access-Control-Allow-Origin", "*");
+    _server.sendHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    _server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
     _server.send(200, "application/json", buf);
 }
 
@@ -612,10 +616,21 @@ void WebApi::handleStatsReset() {
 // ═══════════════════════════════════════════════════════
 
 void WebApi::handleNotFound() {
+    // Handle CORS preflight (OPTIONS) for every route
+    if (_server.method() == HTTP_OPTIONS) {
+        _server.sendHeader("Access-Control-Allow-Origin", "*");
+        _server.sendHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        _server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
+        _server.send(204);
+        return;
+    }
     sendJson(404, "{\"error\":\"not found\"}");
 }
 
 void WebApi::sendJson(int code, const String& json) {
+    _server.sendHeader("Access-Control-Allow-Origin", "*");
+    _server.sendHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    _server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
     _server.send(code, "application/json", json);
 }
 

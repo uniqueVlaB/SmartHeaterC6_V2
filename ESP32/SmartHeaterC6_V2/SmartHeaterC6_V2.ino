@@ -16,6 +16,7 @@
 #include "Scheduler.h"
 #include "FaultManager.h"
 #include "Stats.h"
+#include "Tariff.h"
 
 // ── Peripherals ─────────────────────────────────────────
 StatusLed       led;
@@ -29,10 +30,11 @@ Button          button(PIN_BUTTON);
 TimeSync timeSync;
 Scheduler scheduler;
 // ── Statistics ────────────────────────────────────────────
-Stats stats;
-// ── Logic ───────────────────────────────────────────────
+Stats  stats;
+Tariff tariff;
+// ── Logic ──────────────────────────────────────────────────
 HeaterController heater(relay, tempSensors);
-WebApi           api(heater, tempSensors, pzem, relay, scheduler, timeSync, stats, led);
+WebApi           api(heater, tempSensors, pzem, relay, scheduler, timeSync, stats, led, tariff);
 
 // ── Timing ──────────────────────────────────────────────
 uint32_t lastTempRead    = 0;
@@ -132,6 +134,9 @@ void setup() {
     // Load statistics from NVS
     stats.beginNVS();
 
+    // Load tariff config from NVS and do initial price sync
+    tariff.begin(stats);
+
     // Start web server + serial console
     api.begin();
     webSerial.begin(api.server());
@@ -220,6 +225,7 @@ void loop() {
         lastStatsUpdate = now;
         const auto& pd = pzem.getData();
         stats.update(relay.isOn(), tempSensors.getWaterTemp(), pd.energy, pd.valid);
+        tariff.update();   // auto-switch price on zone boundary
     }
 
     // ── Status LED ──────────────────────────────────────
@@ -242,6 +248,7 @@ void loop() {
         heater.resetNVS();
         scheduler.resetNVS();
         stats.resetNVS();
+        tariff.resetNVS();
         display.wake();
         display.showFault(FaultCode::None, "Factory reset!\nRestarting...");
         delay(2000);

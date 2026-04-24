@@ -8,13 +8,14 @@
 #include "TimeSync.h"
 #include "Stats.h"
 #include "StatusLed.h"
+#include "Tariff.h"
 
 class WebApi {
 public:
     WebApi(HeaterController& ctrl, TempSensors& temp,
            PowerMeter& pzem, HeaterRelay& relay,
            Scheduler& scheduler, TimeSync& timeSync,
-           Stats& stats, StatusLed& led, uint16_t port = 80);
+           Stats& stats, StatusLed& led, Tariff& tariff, uint16_t port = 80);
     void begin();
     void handle();   // call in loop
     bool shouldRestart() const { return _shouldRestart; }
@@ -30,6 +31,7 @@ private:
     TimeSync&         _timeSync;
     Stats&            _stats;
     StatusLed&        _led;
+    Tariff&           _tariff;
 
     bool     _shouldRestart  = false;
     uint32_t _restartStartMs = 0;
@@ -95,6 +97,11 @@ private:
     void handleStats();
     void handleSetPrice();
     void handleStatsReset();
+    // ── Tariff handlers ──────────────────────────
+    void handleTariffGet();
+    void handleTariffOn();
+    void handleTariffOff();
+    void handleTariffConfig();
 
     // ── Helpers ───────────────────────────────────────
     void sendJson(int code, const String& json);
